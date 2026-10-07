@@ -3,7 +3,7 @@ import sys
 import logging
 
 # --- Настройка логирования ---
-LOG_FILE = "triangle_log.txt"
+LOG_FILE = "triangle_log.log"
 
 log_format = "%(asctime)s | [%(levelname)-7s] | %(message)s"
 date_format = "%Y-%m-%d %H:%M:%S"

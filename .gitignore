@@ -8,4 +8,4 @@ logs/
 log/
 __pycache__/
 .idea/
-triangle_log.txt
+triangle_log.log
