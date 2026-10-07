@@ -2,8 +2,6 @@ import math
 import os
 from datetime import datetime
 
-EPS = 1e-9
-
 LOG_FILE = "triangle_log.txt"
 
 
@@ -32,28 +30,46 @@ def parse_float(s: str):
         return None
 
 
-def nearly_equal(x: float, y: float) -> bool:
-    return abs(x - y) <= EPS * max(1.0, abs(x), abs(y))
+def r1(x: float) -> float:
+    """Округление до одной цифры после запятой."""
+    return round(x, 1)
 
 
-def triangle_type(a: float, b: float, c: float):
-    """Возвращает (тип, валиден_ли_треугольник)."""
+def is_triangle(a: float, b: float, c: float) -> bool:
+    """
+    Проверка, образуют ли a, b, c невырожденный треугольник.
+    Все значения округляются до 1 знака после запятой.
+    """
+    a, b, c = r1(a), r1(b), r1(c)
     if a <= 0 or b <= 0 or c <= 0:
-        return "не треугольник", False
-    if a + b <= c or a + c <= b or b + c <= a:
-        return "не треугольник", False
+        return False
+    # Вырожденный случай: сумма двух сторон (с округлением) равна третьей
+    if r1(a + b) == c or r1(a + c) == b or r1(b + c) == a:
+        return False
+    # Строгое нарушение неравенства треугольника
+    if r1(a + b) < c or r1(a + c) < b or r1(b + c) < a:
+        return False
+    return True
 
-    if nearly_equal(a, b) and nearly_equal(b, c):
-        return "равносторонний", True
-    if nearly_equal(a, b) or nearly_equal(b, c) or nearly_equal(a, c):
-        return "равнобедренный", True
-    return "разносторонний", True
+
+def triangle_type(a: float, b: float, c: float) -> str:
+    """Определяет вид треугольника (предполагается, что это треугольник)."""
+    a, b, c = r1(a), r1(b), r1(c)
+    if a == b and b == c:
+        return "равносторонний"
+    if a == b or b == c or a == c:
+        return "равнобедренный"
+    return "разносторонний"
 
 
 def compute_vertices(a: float, b: float, c: float, size: int = 100, padding: int = 5):
     """
-    Возвращает список из трёх вершин
+    Возвращает список из трёх вершин (int, int) для отрисовки в поле size x size.
+    Вершины: A = (0,0), B = (c,0), C = (x,y).
+    |AC| = b, |BC| = a.
     """
+    a, b, c = r1(a), r1(b), r1(c)
+
     x = (b * b - a * a + c * c) / (2.0 * c)
     y2 = b * b - x * x
     if y2 < 0:
@@ -79,6 +95,7 @@ def compute_vertices(a: float, b: float, c: float, size: int = 100, padding: int
     result = []
     for (px, py) in pts:
         nx = (px - minx) * scale + padding
+        # Инверсия по Y (экранная ось Y направлена вниз)
         ny = size - ((py - miny) * scale + padding)
         result.append((int(round(nx)), int(round(ny))))
 
@@ -120,22 +137,21 @@ def main():
 
         values = [parse_float(a_str), parse_float(b_str), parse_float(c_str)]
 
+        # Нечисловые данные
         if any(v is None for v in values):
-            result_type = ""
-            coords = [(-2, -2), (-2, -2), (-2, -2)]
-            print(result_type)
-            print(coords)
-            log("Результат: НЕЧИСЛОВЫЕ данные -> тип='', координаты=[(-2,-2),(-2,-2),(-2,-2)]")
+            print("")
+            print([(-2, -2), (-2, -2), (-2, -2)])
+            log("Результат: НЕЧИСЛОВЫЕ данные -> тип='', "
+                "координаты=[(-2,-2),(-2,-2),(-2,-2)]")
         else:
             a, b, c = values
-            if a <= 0 or b <= 0 or c <= 0 or (a + b <= c or a + c <= b or b + c <= a):
-                result_type = "не треугольник"
-                coords = [(-1, -1), (-1, -1), (-1, -1)]
-                print(result_type)
-                print(coords)
-                log(f"Результат: {result_type} -> координаты=[(-1,-1),(-1,-1),(-1,-1)]")
+            if not is_triangle(a, b, c):
+                print("не треугольник")
+                print([(-1, -1), (-1, -1), (-1, -1)])
+                log("Результат: не треугольник -> "
+                    "координаты=[(-1,-1),(-1,-1),(-1,-1)]")
             else:
-                ttype, _ = triangle_type(a, b, c)
+                ttype = triangle_type(a, b, c)
                 coords = compute_vertices(a, b, c)
                 print(ttype)
                 print(coords)
