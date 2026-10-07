@@ -1,20 +1,29 @@
 import math
-import os
-from datetime import datetime
+import sys
+import logging
 
+# --- Настройка логирования ---
 LOG_FILE = "triangle_log.txt"
 
+log_format = "%(asctime)s | [%(levelname)-7s] | %(message)s"
+date_format = "%Y-%m-%d %H:%M:%S"
 
-def log(message: str) -> None:
-    """Записывает сообщение в лог-файл с отметкой времени."""
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    with open(LOG_FILE, "a", encoding="utf-8") as f:
-        f.write(f"[{timestamp}] {message}\n")
+logging.basicConfig(
+    level=logging.DEBUG,
+    format=log_format,
+    datefmt=date_format,
+    handlers=[
+        logging.StreamHandler(sys.stdout),
+        logging.FileHandler(LOG_FILE, encoding="utf-8"),
+    ],
+)
+
+logger = logging.getLogger("triangle")
 
 
-def log_separator() -> None:
-    with open(LOG_FILE, "a", encoding="utf-8") as f:
-        f.write("-" * 60 + "\n")
+def r1(x: float) -> float:
+    """Округление до одной цифры после запятой."""
+    return round(x, 1)
 
 
 def parse_float(s: str):
@@ -30,11 +39,6 @@ def parse_float(s: str):
         return None
 
 
-def r1(x: float) -> float:
-    """Округление до одной цифры после запятой."""
-    return round(x, 1)
-
-
 def is_triangle(a: float, b: float, c: float) -> bool:
     """
     Проверка, образуют ли a, b, c невырожденный треугольник.
@@ -43,10 +47,8 @@ def is_triangle(a: float, b: float, c: float) -> bool:
     a, b, c = r1(a), r1(b), r1(c)
     if a <= 0 or b <= 0 or c <= 0:
         return False
-    # Вырожденный случай: сумма двух сторон (с округлением) равна третьей
     if r1(a + b) == c or r1(a + c) == b or r1(b + c) == a:
         return False
-    # Строгое нарушение неравенства треугольника
     if r1(a + b) < c or r1(a + c) < b or r1(b + c) < a:
         return False
     return True
@@ -103,26 +105,23 @@ def compute_vertices(a: float, b: float, c: float, size: int = 100, padding: int
 
 
 def main():
-    # Инициализация лога
-    if not os.path.exists(LOG_FILE):
-        log("=== Запуск программы ===")
-    else:
-        log("=== Новый запуск программы ===")
+    logger.info("Логгер успешно сконфигурирован")
+    logger.info("Приложение запущено")
 
     print("Введите a,b,c (для выхода введите пустую строку в поле 'a')")
-    log("Программа запущена, ожидание ввода пользователя")
+    logger.debug("Ожидание ввода пользователя")
 
     while True:
         try:
             a_str = input("Введите a: ")
         except (EOFError, KeyboardInterrupt):
             print("\nВыход.")
-            log("Получен сигнал завершения (EOF/KeyboardInterrupt). Выход.")
+            logger.info("Получен сигнал завершения (EOF/KeyboardInterrupt). Выход.")
             break
 
         if a_str.strip() == "":
             print("Выход.")
-            log("Пользователь ввёл пустую строку. Выход.")
+            logger.info("Пользователь ввёл пустую строку. Выход.")
             break
 
         try:
@@ -130,10 +129,10 @@ def main():
             c_str = input("Введите c: ")
         except (EOFError, KeyboardInterrupt):
             print("\nВыход.")
-            log("Получен сигнал завершения (EOF/KeyboardInterrupt). Выход.")
+            logger.info("Получен сигнал завершения (EOF/KeyboardInterrupt). Выход.")
             break
 
-        log(f"Ввод: a='{a_str}', b='{b_str}', c='{c_str}'")
+        logger.debug(f"Ввод: a='{a_str}', b='{b_str}', c='{c_str}'")
 
         values = [parse_float(a_str), parse_float(b_str), parse_float(c_str)]
 
@@ -141,25 +140,34 @@ def main():
         if any(v is None for v in values):
             print("")
             print([(-2, -2), (-2, -2), (-2, -2)])
-            log("Результат: НЕЧИСЛОВЫЕ данные -> тип='', "
-                "координаты=[(-2,-2),(-2,-2),(-2,-2)]")
+            logger.warning(
+                "Результат: НЕЧИСЛОВЫЕ данные -> тип='', "
+                "координаты=[(-2,-2),(-2,-2),(-2,-2)]"
+            )
         else:
             a, b, c = values
             if not is_triangle(a, b, c):
                 print("не треугольник")
                 print([(-1, -1), (-1, -1), (-1, -1)])
-                log("Результат: не треугольник -> "
-                    "координаты=[(-1,-1),(-1,-1),(-1,-1)]")
+                logger.info(
+                    "Результат: не треугольник -> "
+                    "координаты=[(-1,-1),(-1,-1),(-1,-1)]"
+                )
             else:
                 ttype = triangle_type(a, b, c)
                 coords = compute_vertices(a, b, c)
                 print(ttype)
                 print(coords)
-                log(f"Результат: тип='{ttype}', координаты={coords}")
+                logger.info(f"Результат: тип='{ttype}', координаты={coords}")
 
         print("-" * 40)
-        log_separator()
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception:
+        logger.exception("Непредвиденная ошибка")
+        raise
+    finally:
+        logger.info("Приложение завершено")
