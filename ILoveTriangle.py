@@ -17,6 +17,8 @@ logging.basicConfig(
         logging.FileHandler(LOG_FILE, encoding="utf-8"),
     ],
 )
+logging.info("Логгер успешно сконфигурирован")
+logging.info("Приложение запущено")
 
 logger = logging.getLogger("triangle")
 
