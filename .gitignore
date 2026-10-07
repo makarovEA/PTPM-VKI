@@ -2,10 +2,9 @@ venv/
 .venv/
 env/
 ENV/
-*.log
-*.log.*
+*.tringle_log
+*.tringle_log.*
 logs/
 log/
 __pycache__/
 .idea/
-.tringle_log.txt
