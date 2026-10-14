@@ -4,7 +4,7 @@ import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 
-from ILoveTriangle2 import r1, parse_float, is_triangle, triangle_type, compute_vertices
+from ILoveTriangle import r1, parse_float, is_triangle, triangle_type, compute_vertices
 
 
 class TestTriangleModule(unittest.TestCase):
