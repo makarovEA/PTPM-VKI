@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55b70ca4-753a-4026-9e9f-c713efea1b7c" name="Changes" comment="" />
+    <list default="true" id="55b70ca4-753a-4026-9e9f-c713efea1b7c" name="Changes" comment="Done, i guess">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_lab3.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_lab3.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,9 +62,16 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "Lab__3"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\MakarovEA\PycharmProjects\PTPM-VKI\triangle_lab3" />
+      <recent name="C:\Users\MakarovEA\PycharmProjects\PTPM-VKI" />
+    </key>
+  </component>
   <component name="RunManager" selected="Python tests.Python tests in test_lab3.py">
     <configuration name="ILoveTriangle" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="PTPM-VKI" />
@@ -208,7 +219,15 @@
       <option name="project" value="LOCAL" />
       <updated>1791948602030</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Done, i guess">
+      <option name="closed" value="true" />
+      <created>1794363287510</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1794363287510</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -237,6 +256,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Hotfix" />
     <MESSAGE value="Progress" />
-    <option name="LAST_COMMIT_MESSAGE" value="Progress" />
+    <MESSAGE value="Done, i guess" />
+    <option name="LAST_COMMIT_MESSAGE" value="Done, i guess" />
   </component>
 </project>
