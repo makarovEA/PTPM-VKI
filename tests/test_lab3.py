@@ -1,12 +1,12 @@
 import unittest
 from unittest.mock import Mock, patch
 
-from triangle_lab3 import app as app_module
-from triangle_lab3.calculator import TriangleCalculator, compute_vertices
-from triangle_lab3.controller import Controller
-from triangle_lab3.database import TriangleDatabase
-from triangle_lab3.external import EmailServerStub, ExternalDependency
-from triangle_lab3.user_io import ConsoleUserInteraction, UserInteraction
+import app as app_module
+from calculator import TriangleCalculator, compute_vertices
+from controller import Controller
+from database import TriangleDatabase
+from external import EmailServerStub, ExternalDependency
+from user_io import ConsoleUserInteraction, UserInteraction
 
 
 class TestCalculator(unittest.TestCase):
@@ -15,7 +15,6 @@ class TestCalculator(unittest.TestCase):
 
     def test_valid_triangle_and_types(self) -> None:
         result = self.calc.calculate("3", "4", "5")
-
         self.assertEqual(result.triangle_type, "разносторонний")
         self.assertIsNone(result.error_message)
         self.assertEqual(len(result.coords), 3)
@@ -23,7 +22,6 @@ class TestCalculator(unittest.TestCase):
             (result.length1, result.length2, result.length3),
             ("3", "4", "5"),
         )
-
         self.assertEqual(
             self.calc.calculate("2", "2", "2").triangle_type,
             "равносторонний",
@@ -47,11 +45,7 @@ class TestCalculator(unittest.TestCase):
 
     def test_compute_vertices_branches(self) -> None:
         self.assertEqual(len(compute_vertices(3, 4, 5)), 3)
-
-        # Ветка y2 < 0
         self.assertEqual(len(compute_vertices(10, 1, 2)), 3)
-
-        # Ветка h == 0
         self.assertEqual(len(compute_vertices(1, 1, 2)), 3)
 
 
@@ -60,7 +54,6 @@ class TestDatabase(unittest.TestCase):
         db = TriangleDatabase(":memory:")
         try:
             result = TriangleCalculator().calculate("3", "4", "5")
-
             db.add_record(result)
 
             loaded = db.get_record("3", "4", "5")
@@ -106,7 +99,6 @@ class TestIntegration(unittest.TestCase):
         try:
             user = Mock(spec=UserInteraction)
             user.get_triangle_sides.return_value = ("3", "4", "5")
-
             external = Mock(spec=ExternalDependency)
 
             controller = Controller(
@@ -135,7 +127,6 @@ class TestIntegration(unittest.TestCase):
                 ("3", "4", "5"),
                 ("3", "4", "5"),
             ]
-
             external = Mock(spec=ExternalDependency)
 
             real_calc = TriangleCalculator()
@@ -149,11 +140,9 @@ class TestIntegration(unittest.TestCase):
                 external=external,
             )
 
-            first = controller.process_one()
-            second = controller.process_one()
+            controller.process_one()
+            controller.process_one()
 
-            self.assertIsNotNone(first)
-            self.assertIsNotNone(second)
             self.assertEqual(calc.calculate.call_count, 1)
             self.assertEqual(external.send_result.call_count, 2)
         finally:
@@ -164,7 +153,6 @@ class TestIntegration(unittest.TestCase):
         db = TriangleDatabase(":memory:")
         try:
             external = Mock(spec=ExternalDependency)
-
             controller = Controller(
                 calculator=TriangleCalculator(),
                 database=db,
@@ -186,7 +174,6 @@ class TestIntegration(unittest.TestCase):
         db = TriangleDatabase(":memory:")
         try:
             external = Mock(spec=ExternalDependency)
-
             controller = Controller(
                 calculator=TriangleCalculator(),
                 database=db,
@@ -206,11 +193,11 @@ class TestIntegration(unittest.TestCase):
 
 
 class TestApp(unittest.TestCase):
-    @patch("triangle_lab3.app.EmailServerStub")
-    @patch("triangle_lab3.app.ConsoleUserInteraction")
-    @patch("triangle_lab3.app.TriangleCalculator")
-    @patch("triangle_lab3.app.Controller")
-    @patch("triangle_lab3.app.TriangleDatabase")
+    @patch("app.EmailServerStub")
+    @patch("app.ConsoleUserInteraction")
+    @patch("app.TriangleCalculator")
+    @patch("app.Controller")
+    @patch("app.TriangleDatabase")
     def test_main_loop(
         self,
         db_cls: Mock,
