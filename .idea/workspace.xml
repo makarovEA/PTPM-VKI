@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55b70ca4-753a-4026-9e9f-c713efea1b7c" name="Changes" comment="Done, i guess">
-      <change afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/calculator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controller.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/external.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user_io.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_lab3.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_lab3.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/triangles.db" beforeDir="false" afterPath="$PROJECT_DIR$/triangles.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Lab_1" />
+        <entry key="$PROJECT_DIR$" value="Lab_2" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -77,7 +72,7 @@
       <recent name="C:\Users\MakarovEA\PycharmProjects\PTPM-VKI\triangle_lab3" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests in test_lab3.py">
+  <component name="RunManager" selected="Python.main">
     <configuration name="ILoveTriangle" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="PTPM-VKI" />
       <option name="ENV_FILES" value="" />
@@ -173,6 +168,7 @@
         <item itemvalue="Python tests.Python tests in C:/Users/MakarovEA/PycharmProjects/PTPM-VKI/tests/test_my_project.py" />
         <item itemvalue="Python tests.Python tests in C:/Users/MakarovEA/PycharmProjects/PTPM-VKI/tests/test_delivery.py" />
         <item itemvalue="Python.ILoveTriangle" />
+        <item itemvalue="Python tests.Python tests in test_lab3.py" />
       </list>
     </recent_temporary>
   </component>

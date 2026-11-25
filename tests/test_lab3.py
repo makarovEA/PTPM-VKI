@@ -217,6 +217,8 @@ class TestApp(unittest.TestCase):
         self.assertEqual(controller.process_one.call_count, 2)
         db.close.assert_called_once()
 
+"""Юнит тесты проверяют отдельные блоки кода, а интегрированные - несколько модулей или сервисов. """
+"""unit-тесты проверяют конкретную логику одного юнита. Интеграционные тесты проверяют связи и обмен данными между двумя и более компонентами."""
 
 if __name__ == "__main__":
     unittest.main()
